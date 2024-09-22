@@ -1,0 +1,91 @@
+<picture>
+    <source srcset="images/myimage.avif" type="image/avif">
+    <source srcset="images/myimage.webp" type="image/webp">
+    <img src="images/myimage.jpg" alt="myimage">
+</picture>
+
+<!-- css для установки вариантов форматов background-image -->
+.background-image {
+    background-image: url('image.jpg'); /* Фолбэк для JPEG */
+}
+
+@supports (background-image: url('image.avif')) {
+    .background-image {
+        background-image: url('image.avif'); /* AVIF поддерживается */
+    }
+}
+
+@supports (background-image: url('image.webp')) {
+    .background-image {
+        background-image: url('image.webp'); /* WebP поддерживается */
+    }
+}
+
+<!-- scss -->
+.background-image {
+    background-image: url('image.jpg'); // Фолбэк для JPEG
+
+    @supports (background-image: url('image.avif')) {
+        background-image: url('image.avif'); // AVIF поддерживается
+    }
+
+    @supports (background-image: url('image.webp')) {
+        background-image: url('image.webp'); // WebP поддерживается
+    }
+}
+
+<!-- Вставляем спрайт в HTML -->
+<svg class="tesla">
+    <use xlink:href="images/sprite.svg#tesla-9"></use>
+</svg>
+
+<svg class="nasa">
+    <use xlink:href="images/sprite.svg#nasa-6"></use>
+</svg>
+
+<p>
+    npm install gulp@^4.0.0 --save-dev
+
+npm init
+npm rm --global gulp   - если надо удалить галп
+npm i gulp-cli -g            - глобально устанавливаем галп
+npm i gulp -D                 - установка локального галпа  (-D == --save-dev)
+
+npm i gulp-sass sass -D    - плагины для сасс
+npm i gulp-concat -D          - конкатенация файлов
+npm i gulp-uglify-es -D       - минификация js
+npm i browser-sync -D       - синхронное обновление браузера
+
+npm i gulp-autoprefixer -D - (не работает)
+
+(работает)  npm i gulp-postcss autoprefixer -D
+
+npm i gulp-clean -D            - очищает папку dist
+
+npm i gulp-avif gulp-webp@4.0.1 gulp-imagemin@7.1.0 gulp-newer --save-dev
+
+                     gulp-avif - AVIF. Формат AVIF (AV1 Image File Format) — это современный формат изображений, который позволяет существенно уменьшить размер файлов изображений без значительной потери качества, по сравнению с форматами JPEG, PNG и даже WebP.
+
+                     gulp-webp@4.0.1 — это плагин для Gulp, который конвертирует изображения в формат WebP. WebP — это современный формат изображений, разработанный Google, который обеспечивает более эффективное сжатие по сравнению с традиционными форматами изображений, такими как JPEG и PNG, при сохранении высокого качества.  поддерживает анимации и прозрачность
+
+                    gulp-imagemin — это плагин для Gulp, который сжимает изображения, уменьшая их размер без потери или с минимальной потерей качества. Это помогает оптимизировать изображения для веб-сайтов, улучшая скорость их загрузки и снижая нагрузку на сервер.
+
+                    gulp-newer помогает оптимизировать задачи в Gulp, избегая повторной обработки файлов, которые не изменились. Это позволяет ускорить сборку и снизить нагрузку на систему, так как повторно обрабатываются только те файлы, которые были изменены с момента последнего выполнения задачи
+
+                    gulp-svg-sprite — мощный инструмент для работы с SVG, который помогает оптимизировать использование иконок и графики на веб-странице, уменьшить количество запросов и улучшить производительность.
+
+npm i gulp-svg-sprite --save-dev
+
+npm i gulp-fonter gulp-ttf2woff2 --save-dev
+
+                   gulp-fonter — это плагин для Gulp, предназначенный для преобразования шрифтов из различных форматов (например, TTF, OTF) в веб-шрифты (например, WOFF, WOFF2). Он также может создавать файлы шрифтов в формате SVG и EOT, что позволяет обеспечить кроссбраузерную совместимость для веб-шрифтов.
+
+                   gulp-ttf2woff2 – это плагин для Gulp, который преобразует шрифты из формата TTF (TrueType Font) в формат WOFF2 (Web Open Font Format 2). Формат WOFF2 является улучшенной версией WOFF и обеспечивает лучшее сжатие и, как следствие, более быструю загрузку шрифтов в веб-браузерах.
+
+npm i gulp-include --save-dev
+
+npm config get package-lock   - проверка настроек package-lock.json
+npm config set package-lock true  -  разрешение создания package-lock.json
+npm ci    -   установка точно таких же пакетов как в package-lock.json
+
+</p>
