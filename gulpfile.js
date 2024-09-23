@@ -1,7 +1,7 @@
 const browserSync = require('browser-sync').create();
 const {src, dest, watch, parallel, series} = require('gulp');
 const uglify = require('gulp-uglify-es').default;
-const scss = require('gulp-sass')(require('sass'));
+const sass = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const clean = require('gulp-clean');
 
@@ -75,7 +75,7 @@ function scripts() {
 
 		// 'app/js/*.js',  // все файлы js в папке js
 		// 'app/libs/**/*.js',  // все js во всех папках в папке libs
-		// '!app/js/main.min.js'  // исключая файл
+		'!app/js/main.min.js'  // исключая файл
 	])
 		.pipe(concat('main.min.js'))
 		.pipe(uglify())
@@ -85,14 +85,15 @@ function scripts() {
 
 // файлы стилей дополнительных библиотек подключаем через @import в файле style.scss
 function styles() {
-	return src('app/scss/style.scss')
+	return src('app/sass/main.sass')
+		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
 		.pipe(postcss([
       autoprefixer({
         overrideBrowserslist: ['last 10 versions'] // Настраиваем поддержку последних 10 версий браузеров
       })
     ]))
 		.pipe(concat('style.min.css'))
-		.pipe(scss({outputStyle: 'compressed'}))
+		
 		.pipe(dest('app/css'))
 		.pipe(browserSync.stream())
 }
@@ -105,7 +106,7 @@ function watching() {
 			baseDir: "app/"
 		}
 	});
-	watch(['app/scss/style.scss'], styles)
+	watch(['app/sass/**/*.sass'], styles)
 	watch(['app/images/src'], images)
 	watch(['app/js/main.js'], scripts)
 	watch(['app/components/*', 'app/pages/*'], pages)

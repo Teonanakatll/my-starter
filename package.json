@@ -11,6 +11,7 @@
   "package-lock": true,
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "bootstrap": "^5.3.3",
     "browser-sync": "^3.0.2",
     "gulp": "^4.0.2",
     "gulp-avif": "^1.1.1",
