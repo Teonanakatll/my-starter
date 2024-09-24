@@ -4,6 +4,13 @@
     <img src="images/myimage.jpg" alt="myimage">
 </picture>
 
+/* Фолбэк — используется обычный формат (например, jpg) */
+ .my-element {
+     background-image: url('images/girl.jpg');
+     background-size: cover; /* Изображение полностью покрывает элемент */
+     background-position: center; /* Центрирование изображения */
+ }
+
 <!-- css для установки вариантов форматов background-image -->
 .background-image {
     background-image: url('image.jpg'); /* Фолбэк для JPEG */
@@ -21,7 +28,7 @@
     }
 }
 
-<!-- scss -->
+<!-- sass -->
 .background-image {
     background-image: url('image.jpg'); // Фолбэк для JPEG
 
@@ -43,7 +50,6 @@
     <use xlink:href="images/sprite.svg#nasa-6"></use>
 </svg>
 
-<p>
     npm install gulp@^4.0.0 --save-dev
 
 npm init
@@ -87,5 +93,3 @@ npm i gulp-include --save-dev
 npm config get package-lock   - проверка настроек package-lock.json
 npm config set package-lock true  -  разрешение создания package-lock.json
 npm ci    -   установка точно таких же пакетов как в package-lock.json
-
-</p>

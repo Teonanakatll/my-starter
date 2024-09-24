@@ -21,7 +21,7 @@ const include = require('gulp-include');
 function pages() {
 	return src('app/pages/*.html')
 		.pipe(include({
-			includePaths: 'app/components'
+			includePaths: 'app/parts'
 		}))
 		.pipe(dest('app'))
 		.pipe(browserSync.stream())
@@ -41,7 +41,7 @@ function fonts() {
 function images() {
 	return src(['app/images/src/*.*', '!app/images/src/*.svg'])
 		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
-		.pipe(avif({ quality : 50 }))
+		.pipe(avif({ quality : 70 }))
 
 		.pipe(src('app/images/src/*.*'))
 		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
@@ -109,7 +109,7 @@ function watching() {
 	watch(['app/sass/**/*.sass'], styles)
 	watch(['app/images/src'], images)
 	watch(['app/js/main.js'], scripts)
-	watch(['app/components/*', 'app/pages/*'], pages)
+	watch(['app/parts/*', 'app/pages/*'], pages)
 	watch(['app/*.html']).on('change', browserSync.reload)
 }
 
@@ -154,5 +154,5 @@ exports.watching = watching;
 
 // последовательная серия, сначало удаление потом очистка
 exports.build = series(cleanDist, building);
-// данные таски включаются автоматически при запуске галпа
-exports.default = parallel(styles, images, scripts, pages, watching)  // паралельное выполнение тасков
+// СНАЧАЛО STYLES !!!  данные таски включаются автоматически при запуске галпа
+exports.default = series(styles, parallel(images, scripts, pages, watching))  // паралельное выполнение тасков
