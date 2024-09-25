@@ -10,7 +10,11 @@
   "description": "",
   "package-lock": true,
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
     "autoprefixer": "^10.4.20",
+    "babel-loader": "^9.2.1",
+    "babel-plugin-root-import": "^6.6.0",
     "bootstrap": "^5.3.3",
     "browser-sync": "^3.0.2",
     "gulp": "^4.0.2",
@@ -27,7 +31,11 @@
     "gulp-ttf2woff2": "^4.0.1",
     "gulp-uglify-es": "^3.0.0",
     "gulp-webp": "^4.0.1",
+    "jquery": "^3.7.1",
     "sass": "^1.79.3",
-    "swiper": "^11.1.14"
+    "swiper": "^11.1.14",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.94.0",
+    "webpack-stream": "^7.0.0"
   }
 }
