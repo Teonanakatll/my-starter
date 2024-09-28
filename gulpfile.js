@@ -21,6 +21,7 @@ const include = require('gulp-include');
 const webpackStream = require('webpack-stream');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const fs = require('fs');
 const path = require('path');
 
 function pages() {
@@ -46,7 +47,7 @@ function fonts() {
 function images() {
 	return src(['app/images/src/*.*', '!app/images/src/*.svg'])
 		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
-		.pipe(avif({ quality : 70 }))
+		.pipe(avif({ quality : 60 }))
 
 		.pipe(src('app/images/src/*.*'))
 		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
@@ -61,6 +62,11 @@ function images() {
 
 // вызывается отдельной командой
 function sprite() {
+	// Удаляем старый спрайт, если он существует
+	const spritePath = 'app/images/sprite.svg';
+	if (fs.existsSync(spritePath)) {
+		fs.unlinkSync(spritePath);
+	}
 	return src('app/images/*.svg')
 		.pipe(svgSprite({
 			mode: {
@@ -173,7 +179,7 @@ function watching() {
 	});
 	watch(['app/sass/**/*.sass'], styles)
 	watch(['app/images/src'], images)
-	watch(['app/js/main.js'], scripts)
+	watch(['app/js/*.js', '!app/js/main.min.js'], scripts)
 	watch(['app/parts/*', 'app/pages/*'], pages)
 	watch(['app/*.html']).on('change', browserSync.reload)
 }
