@@ -31,6 +31,28 @@ export function setBackgrounds() {
 		});
 	}
 
+	// Функция для ленивой загрузки картинок
+	function lazyLoadImages() {
+	const lazyImages = document.querySelectorAll("img[loading='lazy']");
+
+	if ("IntersectionObserver" in window) {
+			let observer = new IntersectionObserver((entries, observer) => {
+					entries.forEach(entry => {
+							if (entry.isIntersecting) {
+									let img = entry.target;
+									img.src = img.dataset.src || img.src; // Загрузка ленивого изображения
+									img.removeAttribute("loading");
+									observer.unobserve(img);
+							}
+					});
+			});
+
+			lazyImages.forEach(image => {
+					observer.observe(image);
+			});
+		}
+	}
+
 	// Функция для динамической установки background-image
 	async function setBackgrounds() {
 		const bgElements = document.querySelectorAll('[class^="bg--"]');
@@ -43,33 +65,43 @@ export function setBackgrounds() {
 		// const supportsAvifFormat = false;
 		// const supportsWebpFormat = false;
 
-		// Для каждого элемента проверяем и устанавливаем нужный формат
-		bgElements.forEach(async (element) => {
-			const classList = Array.from(element.classList);
-			const bgClass = classList.find(cls => cls.startsWith('bg--'));
+		const imageObserver = new IntersectionObserver((entries, observer) => {
+			// Для каждого элемента проверяем и устанавливаем нужный формат
+			entries.forEach(async (entry) => {
+				if (entry.isIntersecting) {
+					const element = entry.target;
+					const classList = Array.from(element.classList);
+					const bgClass = classList.find(cls => cls.startsWith('bg--'));
 
-			if (bgClass) {
-				const imageName = bgClass.replace('bg--', ''); // Убираем 'bg--'
+					if (bgClass) {
+						const imageName = bgClass.replace('bg--', ''); // Убираем 'bg--'
 
-				let format;
-				if (supportsAvifFormat) {
-					format = 'avif';
-				} else if (supportsWebpFormat) {
-					format = 'webp';
-				} else {
-					const jpgExists = await checkImage(`images/${imageName}.jpg`);
-					const jpegExists = await checkImage(`images/${imageName}.jpeg`);
-					const pngExists = await checkImage(`images/${imageName}.png`);
-					format = jpgExists ? 'jpg' : jpegExists ? 'jpeg' : pngExists ? 'png' : null;
+						let format;
+						if (supportsAvifFormat) {
+							format = 'avif';
+						} else if (supportsWebpFormat) {
+							format = 'webp';
+						} else {
+							const jpgExists = await checkImage(`images/${imageName}.jpg`);
+							const jpegExists = await checkImage(`images/${imageName}.jpeg`);
+							const pngExists = await checkImage(`images/${imageName}.png`);
+							format = jpgExists ? 'jpg' : jpegExists ? 'jpeg' : pngExists ? 'png' : null;
+						}
+
+						// Если формат определен, установить новый background-image
+						if (format) {
+							element.style.backgroundImage = `url('images/${imageName}.${format}')`;
+							// console.log(element.style.backgroundImage)
+						} else {
+							console.error(`Нет доступного изображения для ${imageName}`);
+						}
+					}
+					observer.unobserve(element);
 				}
-
-				// Если формат определен, установить новый background-image
-				if (format) {
-					element.style.backgroundImage = `url('images/${imageName}.${format}')`;
-				} else {
-					console.error(`Нет доступного изображения для ${imageName}`);
-				}
-			}
+			});
+		});
+		bgElements.forEach(element => {
+			imageObserver.observe(element);
 		});
 	}
 

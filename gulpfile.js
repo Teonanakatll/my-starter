@@ -24,6 +24,12 @@ const TerserPlugin = require('terser-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 
+const cleanCSS = require('gulp-clean-css');
+const cssnano = require('cssnano');
+const sourcemaps = require('gulp-sourcemaps');
+const plumber = require('gulp-plumber');
+const notify = require('gulp-notify');
+
 function pages() {
 	return src('app/pages/*.html')
 		.pipe(include({
@@ -79,6 +85,14 @@ function sprite() {
 		.pipe(dest('app/images'))
 }
 
+const plumberScriptsConfig = {
+	errorHandler: notify.onError({
+		title: 'SCRIPTS',
+		message: 'Error <%= error.message %>',
+		// sound: false
+	})
+}
+
 function scripts() {
 	return src([
 		// 'node_modules/swiper/swiper-bundle.js',
@@ -88,6 +102,7 @@ function scripts() {
 		// 'app/libs/**/*.js',  // все js во всех папках в папке libs
 		'!app/js/main.min.js'  // исключая файл
 	])
+	.pipe(plumber(plumberScriptsConfig))
 	.pipe(webpackStream({
 		mode: 'production',
 		performance: { hints: false },
@@ -154,17 +169,29 @@ function scripts() {
 		.pipe(browserSync.stream())
 }
 
+const plumberSASSConfig = {
+	errorHandler: notify.onError({
+		title: 'STYLES',
+		message: 'Error <%= error.message %>',
+		// sound: false
+	})
+}
+
 // файлы стилей дополнительных библиотек подключаем через @import в файле style.scss
 function styles() {
 	return src('app/sass/main.sass')
+		.pipe(plumber(plumberSASSConfig))
+		.pipe(sourcemaps.init()) // Инициализация sourcemaps
 		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+		.pipe(cleanCSS())
 		.pipe(postcss([
       autoprefixer({
         overrideBrowserslist: ['last 10 versions'] // Настраиваем поддержку последних 10 версий браузеров
-      })
+      }),
+			cssnano()
     ]))
 		.pipe(concat('style.min.css'))
-		
+		.pipe(sourcemaps.write('.')) // Запись sourcemaps в отдельный файл
 		.pipe(dest('app/css'))
 		.pipe(browserSync.stream())
 }
@@ -204,11 +231,14 @@ function building() {
 		'app/css/style.min.css',
 		'app/css/noscript/noscript-styles.css',
 		'app/images/*.*',
+		'app/images/thumbs/*.*',
 		'!app/images/*.svg',
 		'!app/images/stack/sprite.stack.html',
 		'app/images/sprite.svg',
 		'app/fonts/*.*',
 		'app/js/main.min.js',
+		'app/pages/*.html',
+		'app/parts/**/*.html',
 		'app/*.html'
 	], {base : 'app'})       //  сохраняет структуру папок
 		.pipe(dest('dist'))    //  копирует всё в папку dist

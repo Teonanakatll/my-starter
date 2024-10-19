@@ -37,8 +37,88 @@ body
 	transform: scale(50)
 	margin-left: 200px
 
+.wrapp
+	display: flex
+	align-items: center
+	justify-content: space-around
+	margin: 100px 0
+
+.img
+	img
+		height: 300px
+		width: auto
+		display: inline-block
+
+.menu
+	margin-left: 800px
+	line-height: 40px
+	font-size: 25px
+	width: 350px
+
+.border
+	border: 5px #ff0099 solid
+	box-shadow: 0 0 35px #ff0099
+
+.butt
+	height: 300px
+	display: flex
+	flex-direction: column
+	align-items: stretch
+	justify-content: center
+
+.gallery
+	text-align: center
+	display: block
+
+.big > img
+	height: 600px
+	margin-bottom: 50px
+.small
+	width: 600px
+	display: flex
+	margin: 0 auto
+	justify-content: space-around
+	img
+		height: 150px
+.button
+	width: 50px
+	height: 50px
+	border: 3px solid #ff0099
+	color: #ff0099
+	// text-align: center
+	display: flex
+	align-items: center
+	justify-content: center
+	line-height: 100%
+	border-radius: 50%
+	font-size: 40px
+	position: relative
+	margin-bottom: 30px
+	left: 100px
+	cursor: pointer
+
+.active
+	opacity: 1 !important
+	box-shadow: 0 0 35px #FF0000FF !important
+	border: 2px solid #FF0000FF
+
 .test-bg
-	width: 500px
-	height: 500px
+	width: 1000px
+	height: 1000px
+	@include breakpoint-down(xxl)
+		width: 900px
+		height: 900px
+	@include breakpoint-down(xl)
+		width: 600px
+		height: 600px
+	@include breakpoint-down(lg)
+		width: 500px
+		height: 500px
+	@include breakpoint-down(md)
+		width: 200px
+		height: 200px
+	@include breakpoint-down(sm)
+		width: 100px
+		height: 100px
 	background-size: cover
 	background-position: center
