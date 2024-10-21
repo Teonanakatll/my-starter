@@ -51,15 +51,15 @@ function fonts() {
 }
 
 function images() {
-	return src(['app/images/src/**/*.*', '!app/images/src/**/*.svg'])
+	return src(['app/images/src/**/*.*', '!app/images/src/**/*.svg', '!app/images/src/mini/*.*'])
 		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
 		.pipe(avif({ quality : 50 }))
 
-		.pipe(src('app/images/src/**/*.*'))
+		.pipe(src(['app/images/src/**/*.*', '!app/images/src/mini/*']))
 		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
 		.pipe(webp())
 
-		.pipe(src('app/images/src/**/*.*'))
+		.pipe(src(['app/images/src/**/*.*', '!app/images/src/mini/*']))
 		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
 		.pipe(imagemin())
 
@@ -220,7 +220,7 @@ function watching() {
 // }
 
 // очищает папку dist, вызывается автоматически перед building
-function cleanDist() {
+function cleandist() {
 	return src('dist')
 		.pipe(clean())
 }
@@ -230,8 +230,8 @@ function building() {
 	return src([
 		'app/css/style.min.css',
 		'app/css/noscript/noscript-styles.css',
-		'app/images/*.*',
-		'app/images/thumbs/*.*',
+		'app/images/**/*.*',
+		'!app/images/src/**/*.*',
 		'!app/images/*.svg',
 		'!app/images/stack/sprite.stack.html',
 		'app/images/sprite.svg',
@@ -249,12 +249,13 @@ exports.styles = styles;
 exports.images = images;
 exports.fonts = fonts;
 exports.pages = pages;
+exports.cleandist = cleandist;
 exports.building = building;
 exports.sprite = sprite;
 exports.scripts = scripts;
 exports.watching = watching;
 
 // последовательная серия, сначало удаление потом очистка
-exports.build = series(cleanDist, building);
+exports.build = series(cleandist, building);
 // СНАЧАЛО STYLES !!!  данные таски включаются автоматически при запуске галпа
 exports.default = series(styles, scripts, parallel(images, pages, watching))  // паралельное выполнение тасков
