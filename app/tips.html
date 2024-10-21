@@ -1,7 +1,7 @@
 <picture>
     <source srcset="images/myimage.avif" type="image/avif">
     <source srcset="images/myimage.webp" type="image/webp">
-    <img src="images/myimage.jpg" alt="myimage">
+    <img class="myimage" src="images/myimage.jpg" alt="myimage" loading="lazy">
 </picture>
 
 /* Фолбэк — используется обычный формат (например, jpg) */
@@ -41,12 +41,18 @@
     }
 }
 
+<!--                                                                                   -->
+<!--                                                                                   -->
+<!--                     УДАЛИ FILL ИЗ ИСХОДНИКА!!!!!!!!!!!!!!!!!!!!                        -->
+<!--                             ИЗ ЗАГОЛОВКА ТОЖЕ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!                            -->
+<!--                                                                                   -->
+
 <!-- Вставляем спрайт в HTML -->
-<svg class="tesla">
+<svg class="tesla" role="img" aria-label="tesla-9">
     <use xlink:href="images/sprite.svg#tesla-9"></use>
 </svg>
 
-<svg class="nasa">
+<svg class="nasa" role="img" aria-label="nasa-6">
     <use xlink:href="images/sprite.svg#nasa-6"></use>
 </svg>
 

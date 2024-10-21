@@ -1,10 +1,11 @@
 const box = document.querySelector('.box2');
 const btn = document.querySelector('.button');
 
-import Swiper from "swiper"
+
 
 import {animate} from "./gsap-test"
 import { setBackgrounds } from "./set-background"
+import Swiper from "swiper"
 
 import { Parallax, Mousewheel, Controller, Pagination, Scrollbar, Navigation, Thumbs, Autoplay } from 'swiper/modules'
 import { jqueryTest } from "./jquery";
@@ -20,16 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			el: '.swiper-pagination',
 			clickable: true,
 		},
-		mousewheel: {
-			inverse: true,
-		},
+		// mousewheel: {
+		// 	inverse: false,
+		// },
 		// direction: 'vertical',
-		centeredSlides: true,
+		// centeredSlides: true,
 		loop: true,
 		speed: 2000,
 	})
 
-	animate();
+	// animate();
 
 	jqueryTest();
 

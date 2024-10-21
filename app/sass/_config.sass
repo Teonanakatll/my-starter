@@ -33,8 +33,8 @@ $gutter: $grid-gutter-width
 
 // IMPORT SECTION
 
-@import 'node_modules/bootstrap/scss/bootstrap-reboot.scss' // Bootstrap Reboot collection
-@import 'node_modules/bootstrap/scss/bootstrap-grid.scss' // Optional Bootstrap Grid
+// @import 'node_modules/bootstrap/scss/bootstrap-reboot.scss' // Bootstrap Reboot collection
+// @import 'node_modules/bootstrap/scss/bootstrap-grid.scss' // Optional Bootstrap Grid
 
 // @import 'app/libs/font-awesome/css/font-awesome.min'
 // @import 'node_modules/swiper/swiper-bundle'
@@ -42,7 +42,7 @@ $gutter: $grid-gutter-width
 //  @import '../../node_modules/swiper/swiper-bundle';
 // расширение файла не пишем ! (css)
 
-@import 'node_modules/swiper/swiper-bundle.min'
+// @import 'node_modules/swiper/swiper-bundle.min'
 // FONTS LOAD SECTION
 
 @mixin font($fname, $fstyle, $fweight, $furl)
@@ -75,6 +75,7 @@ input, textarea
 		border-color: green
 
 body
+	min-height: 100%
 	font-family: $userfont
 	font-size: $fontsize
 	line-height: $lineheight
@@ -82,3 +83,38 @@ body
 	min-width: 320px
 	position: relative
 	overflow-x: hidden
+
+html
+	box-sizing: border-box
+	scroll-behavior: smooth
+	height: 100%
+
+*, *::after, *::before
+	box-sizing: inherit
+
+ul[class], ol[class] 
+	padding: 0
+
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, figcaption, blockquote, dl, dd 
+	margin: 0
+
+ul[class] 
+	list-style: none
+
+img 
+	max-width: 100%
+	display: block
+input, button, textarea, select 
+	font: inherit
+
+button
+	margin: 0
+	padding: 0
+	border: none
+	cursor: pointer
+
+a
+	text-decoration: none
+
+input:focus, button:focus, textarea:focus
+	outline: 2px solid $accent

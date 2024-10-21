@@ -33,9 +33,9 @@ export function setBackgrounds() {
 
 	// Функция для ленивой загрузки картинок
 	function lazyLoadImages() {
-	const lazyImages = document.querySelectorAll("img[loading='lazy']");
+		const lazyImages = document.querySelectorAll("img[loading='lazy']");
 
-	if ("IntersectionObserver" in window) {
+		if ("IntersectionObserver" in window) {
 			let observer = new IntersectionObserver((entries, observer) => {
 					entries.forEach(entry => {
 							if (entry.isIntersecting) {
@@ -45,7 +45,9 @@ export function setBackgrounds() {
 									observer.unobserve(img);
 							}
 					});
-			});
+			}, {
+				rootMargin: '0px 0px -350% 0px' // Добавляем rootMargin
+		});
 
 			lazyImages.forEach(image => {
 					observer.observe(image);
@@ -106,4 +108,7 @@ export function setBackgrounds() {
 	}
 
 	setBackgrounds();
+
+	// Вызов функции для ленивой загрузки изображений (img)
+	// lazyLoadImages();
 }

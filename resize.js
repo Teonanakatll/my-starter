@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Папка с изображениями
-const inputDir = 'app/images/mini/';
+const inputDir = 'app/images/src/mini/';
 const outputDir = 'app/images/thumbs/';
 
 // Создание папки для выходных изображений, если она не существует

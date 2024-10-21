@@ -10,16 +10,18 @@
 <body>
 	<header>header</header>
 
-
-	<main> <h1>main123MAIN</h1>
+<div class="wrapper">
+	<main class="main"> <h1>main123MAIN</h1>
 
 		<div class="container">
 			<div class="row">
 
 				<div class="col-md-3 mb-5 test">
-					<svg class="tesla">
-						<use xlink:href="images/sprite.svg#tesla-9"></use>
-					</svg>
+					<a href="#">
+						<svg class="tesla">
+							<use xlink:href="images/sprite.svg#tesla-9"></use>
+						</svg>
+					</a>
 				</div>
 				<div class="col-md-3 mb-3 test">
 					<svg class="sony">
@@ -33,13 +35,13 @@
 		<div class="button">-</div>
 		<div class="gallery">
 			<div class="big">
-				<img src="images/aries.jpeg" alt="aries">
+				<img src="images/aries.jpeg" alt="aries" loading="lazy">
 			</div>
 			<div class="small">
-				<a href="images/aries.jpeg"><img src="images/thumbs/aries.jpeg" alt="aries"></a>
-				<a href="images/coral.jpeg"><img src="images/thumbs/coral.jpeg" alt="coral"></a>
-				<a href="images/samuray.jpeg"><img src="images/thumbs/samuray.jpeg" alt="samuray"></a>
-				<a href="images/oktan.jpeg"><img src="images/thumbs/oktan.jpeg" alt="oktan"></a>
+				<a href="images/aries.jpeg"><img src="images/thumbs/aries.jpeg" alt="aries" loading="lazy"></a>
+				<a href="images/coral.jpeg"><img src="images/thumbs/coral.jpeg" alt="coral" loading="lazy"></a>
+				<a href="images/samuray.jpeg"><img src="images/thumbs/samuray.jpeg" alt="samuray" loading="lazy"></a>
+				<a href="images/oktan.jpeg"><img src="images/thumbs/oktan.jpeg" alt="oktan" loading="lazy"></a>
 			</div>
 		</div>
 
@@ -47,7 +49,7 @@
 			<picture class="img oktan">
 				<source srcset="images/oktan.avif" type="image/avif">
 				<source srcset="images/oktan.webp" type="image/webp">
-				<img src="images/oktan.jpeg" alt="oktan">
+				<img src="images/oktan.jpeg" alt="oktan" loading="lazy">
 			</picture>
 			<button class="okt">Oktan</button>
 		</div>
@@ -56,7 +58,7 @@
 			<picture class="img samuray">
 				<source srcset="images/samuray.avif" type="image/avif">
 				<source srcset="images/samuray.webp" type="image/webp">
-				<img src="images/samuray.jpg" alt="samuray">
+				<img src="images/samuray.jpeg" alt="samuray" loading="lazy">
 			</picture>
 			
 
@@ -68,7 +70,7 @@
 			<picture class="img coral">
 				<source srcset="images/coral.avif" type="image/avif">
 				<source srcset="images/coral.webp" type="image/webp">
-				<img src="images/coral.jpg" alt="samuray">
+				<img src="images/coral.jpeg" alt="samuray" loading="lazy">
 			</picture>
 		</div>
 
@@ -101,9 +103,9 @@
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci necessitatibus distinctio repellendus nihil? Mollitia quae placeat accusantium, cumque hic autem minima nemo atque reiciendis saepe ratione, alias assumenda, doloremque unde.</p>
 		</div>
 
-		<div class="swiper surf">
+		<div class="surf">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide slide1">text1fvdfv</div>
+				<div class="swiper-slide slide1">text1</div>
 				<div class="swiper-slide slide2">text2</div>
 				<div class="swiper-slide slide3">text3</div>
 				<div class="swiper-slide slide4">text4</div>
@@ -117,11 +119,35 @@
 
 
 
-<img	class="test-img" src="data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=" title="avif">
+  <footer class="footer">footer Scooter</footer>
 
-<img	class="test-img" src="data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABQAQCdASoDAAIAAgA2JQBOgC6gAP73M8eLuxHGTv3eIAAA" title="webp">
 
-<footer>footer Scooter</footer>
+
+<!-- wrapper -->
+
+</div> 
+
+
+
+<div class="surf">
+
+  <div class="swiper-wrapper">
+
+    <div class="swiper-slide slide1">text1</div>
+
+    <div class="swiper-slide slide2">text2</div>
+
+    <div class="swiper-slide slide3">text3</div>
+
+    <div class="swiper-slide slide4">text4</div>
+
+    <div class="swiper-slide slide5">text5</div>
+
+  </div>
+
+  <div class="swiper-pagination"></div>
+
+</div>
 
 
 
