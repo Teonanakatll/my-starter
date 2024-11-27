@@ -32,6 +32,8 @@ const notify = require('gulp-notify');
 
 function pages() {
 	return src('app/pages/*.html')
+		// .pipe(newer('app'))  // если включить то newer обновляет html по одной странице, но на главных страницах не видно
+		// изменений которые произошли в /parts, пока не изменить чтонебудь в html в /pages
 		.pipe(include({
 			includePaths: 'app/parts'
 		}))
@@ -221,7 +223,7 @@ function watching() {
 
 // очищает папку dist, вызывается автоматически перед building
 function cleandist() {
-	return src('dist')
+	return src('dist', { allowEmpty: true }) // Игнорирует отсутствие файлов
 		.pipe(clean())
 }
 

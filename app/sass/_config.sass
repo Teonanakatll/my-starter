@@ -60,6 +60,24 @@ $gutter: $grid-gutter-width
 
 // GENERAL CSS SETTINGS
 
+*, *::after, *::before
+	box-sizing: border-box
+
+body
+	min-height: 100%
+	font-family: $userfont
+	font-size: $fontsize
+	line-height: $lineheight
+	color: $textcolor
+	min-width: 320px
+	position: relative
+	overflow-x: hidden
+
+html
+	// box-sizing: border-box
+	scroll-behavior: smooth
+	height: 100%
+
 ::placeholder
 	color: #666
 
@@ -74,23 +92,6 @@ input, textarea
 	&:required:valid
 		border-color: green
 
-body
-	min-height: 100%
-	font-family: $userfont
-	font-size: $fontsize
-	line-height: $lineheight
-	color: $textcolor
-	min-width: 320px
-	position: relative
-	overflow-x: hidden
-
-html
-	box-sizing: border-box
-	scroll-behavior: smooth
-	height: 100%
-
-*, *::after, *::before
-	box-sizing: inherit
 
 ul[class], ol[class] 
 	padding: 0
@@ -115,6 +116,7 @@ button
 
 a
 	text-decoration: none
+	color: inherit
 
 input:focus, button:focus, textarea:focus
 	outline: 2px solid $accent
