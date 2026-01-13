@@ -17,6 +17,7 @@
     "babel-plugin-root-import": "^6.6.0",
     "bootstrap": "^5.3.3",
     "browser-sync": "^3.0.2",
+    "browsersync-ssi": "^0.2.4",
     "cssnano": "^7.0.6",
     "gsap": "^3.12.5",
     "gulp": "^4.0.2",

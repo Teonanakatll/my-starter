@@ -13,6 +13,8 @@ const fonter = require('gulp-fonter');
 const ttf2woff2 = require('gulp-ttf2woff2');
 const svgSprite = require('gulp-svg-sprite');
 
+const bssi = require('browsersync-ssi'); // для поддержки include в browsersync
+
 // вместо gulp-autoprefixer
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
@@ -30,16 +32,18 @@ const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 
-function pages() {
-	return src('app/pages/*.html')
-		// .pipe(newer('app'))  // если включить то newer обновляет html по одной странице, но на главных страницах не видно
-		// изменений которые произошли в /parts, пока не изменить чтонебудь в html в /pages
-		.pipe(include({
-			includePaths: 'app/parts'
-		}))
-		.pipe(dest('app'))
-		.pipe(browserSync.stream())
-}
+
+// <!--=include header.html --> синтаксис для инклюдов в gulp-include
+// function pages() {
+// 	return src('app/pages/*.html')
+// 		// .pipe(newer('app'))  // если включить то newer обновляет html по одной странице, но на главных страницах не видно
+// 		// изменений которые произошли в /parts, пока не изменить чтонебудь в html в /pages
+// 		.pipe(include({
+// 			includePaths: 'app/parts'
+// 		}))
+// 		// .pipe(dest('app'))
+// 		.pipe(browserSync.stream())
+// }
 
 // вызывается отдельной командой
 function fonts() {
@@ -203,23 +207,17 @@ function watching() {
 	// итициализируем browsersync
 	browserSync.init({
 		server: {
-			baseDir: "app/"
+			baseDir: "app/",
+			middleware: bssi({ baseDir: 'app/', ext: '.html' })
 		}
 	});
 	watch(['app/sass/**/*.sass'], styles)
 	watch(['app/images/src'], images)
 	watch(['app/js/*.js', '!app/js/main.min.js'], scripts)
-	watch(['app/parts/*', 'app/pages/*'], pages)
-	watch(['app/*.html']).on('change', browserSync.reload)
+	// watch(['app/parts/*', 'app/pages/*'], pages)
+	watch(['app/*.html', 'app/**/*.html']).on('change', browserSync.reload)
 }
 
-// function browsersync() {
-// 	browserSync.init({
-// 		server: {
-// 			baseDir: "app/"
-// 		}
-// 	});
-// }
 
 // очищает папку dist, вызывается автоматически перед building
 function cleandist() {
@@ -250,7 +248,7 @@ function building() {
 exports.styles = styles;
 exports.images = images;
 exports.fonts = fonts;
-exports.pages = pages;
+// exports.pages = pages;
 exports.cleandist = cleandist;
 exports.building = building;
 exports.sprite = sprite;
@@ -260,4 +258,4 @@ exports.watching = watching;
 // последовательная серия, сначало удаление потом очистка
 exports.build = series(cleandist, building);
 // СНАЧАЛО STYLES !!!  данные таски включаются автоматически при запуске галпа
-exports.default = series(styles, scripts, parallel(images, pages, watching))  // паралельное выполнение тасков
+exports.default = series(styles, scripts, parallel(images, watching))  // паралельное выполнение тасков
