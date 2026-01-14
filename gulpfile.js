@@ -7,7 +7,6 @@ const clean = require('gulp-clean');
 
 const avif = require('gulp-avif');
 const webp = require('gulp-webp');
-const imagemin = require('gulp-imagemin');
 const newer = require('gulp-newer');
 const fonter = require('gulp-fonter');
 const ttf2woff2 = require('gulp-ttf2woff2');
@@ -32,8 +31,11 @@ const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 
+// npm i -D imagemin-mozjpeg imagemin-pngquant imagemin-svgo
+const imagemin = require('gulp-imagemin');
 
-// <!--=include header.html --> синтаксис для инклюдов в gulp-include
+
+// <!--=include header.html --> синтаксис для инклюдов в gulp-include, может пригодиться для статичных сайтов
 // function pages() {
 // 	return src('app/pages/*.html')
 // 		// .pipe(newer('app'))  // если включить то newer обновляет html по одной странице, но на главных страницах не видно
@@ -46,6 +48,7 @@ const notify = require('gulp-notify');
 // }
 
 // вызывается отдельной командой
+
 function fonts() {
 	return src('app/fonts/src/*.*')
 		.pipe(fonter({
@@ -56,18 +59,39 @@ function fonts() {
 		.pipe(dest('app/fonts'))
 }
 
-function images() {
-	return src(['app/images/src/**/*.*', '!app/images/src/**/*.svg', '!app/images/src/mini/*.*'])
-		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
+function webAvif() {
+	return src('app/images/src/webavif/*.*')
+		.pipe(newer('app/images/webavif'))
 		.pipe(avif({ quality : 50 }))
 
-		.pipe(src(['app/images/src/**/*.*', '!app/images/src/mini/*']))
-		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
+		.pipe(src('app/images/src/webavif/*.*'))
+		.pipe(newer('app/images/webavif'))
 		.pipe(webp())
 
-		.pipe(src(['app/images/src/**/*.*', '!app/images/src/mini/*']))
+		.pipe(dest('app/images/webavif'))
+}
+
+async function images() {
+	const mozjpeg = (await import('imagemin-mozjpeg')).default;
+	const pngquant = (await import('imagemin-pngquant')).default;
+  const svgo = (await import('imagemin-svgo')).default;
+	// return src(['app/images/src/webavif/*.*', '!app/images/src/**/*.svg', '!app/images/src/mini/*.*'])
+		// .pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
+		// .pipe(avif({ quality : 50 }))
+
+		// .pipe(src(['app/images/src/webavif/*.*', '!app/images/src/mini/*']))
+		// .pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
+		// .pipe(webp())
+
+	return src(['app/images/src/**/*.*', '!app/images/src/mini/*', '!app/images/src/webavif/*', '!app/images/webavif/*'])
 		.pipe(newer('app/images'))  // проверяет есть ли данные картинки в dist
-		.pipe(imagemin())
+		.pipe(imagemin([
+			mozjpeg({ quality: 70, progressive: true }),
+			pngquant({ quality: [0.65, 0.8]}),
+			svgo()
+		],{
+			verbose: true
+		}))
 
 		.pipe(dest('app/images'))
 }
@@ -240,7 +264,7 @@ function building() {
 		'app/pages/*.html',
 		'app/parts/**/*.html',
 		'app/*.html'
-	], {base : 'app'})       //  сохраняет структуру папок
+	], {base : 'app', allowEmpty: true})       //  сохраняет структуру папок
 		.pipe(dest('dist'))    //  копирует всё в папку dist
 }
 
@@ -248,6 +272,7 @@ function building() {
 exports.styles = styles;
 exports.images = images;
 exports.fonts = fonts;
+exports.webAvif = webAvif;
 // exports.pages = pages;
 exports.cleandist = cleandist;
 exports.building = building;
